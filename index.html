@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>TODO</title>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <span class="head-text">todo</span>
+            </div>
+            <div class="content">
+                <input class="new-task" type="text" placeholder="What should be done?">
+                <input class="date datepicker" type="text" placeholder="Date?">
+                <p>
+                    <button class="add-button">Add task</button>
+                </p>
+                <table class="task-list">
+                    <thead>
+                        <tr>
+                            <td class="done-cell">Done</td>
+                            <td class="task-text-cell">Task</td>
+                            <td class="date-cell">Expiration Date&#x25BC</td>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+        <script src="js/cors.js"></script>
+        <script src="js/script.js"></script>
+    </body>
+</html>

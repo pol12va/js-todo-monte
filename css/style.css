@@ -1,0 +1,135 @@
+body {
+    background: rgb(245, 245, 245);
+    font-family: Georgia, Helvetica, Arial, sans-serif;
+}
+
+input[type=button] {
+    font-size: 2em;
+}
+
+label, input {
+    font-size: 2em;
+}
+
+.container {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.header {
+    font-size: 6em;
+    color: #cc0033;
+}
+
+.content .new-task {
+    width: 400px;
+    box-shadow: 0px 0px 0px #888888;
+    padding: 10px 30px 10px 30px;
+}
+
+.content .new-task::-webkit-input-placeholder {
+   color: #cccccc;
+   font-style: italic;
+}
+
+.content .new-task:-moz-placeholder { /* Firefox 18- */
+   color: #cccccc;
+   font-style: italic;
+}
+
+.content .new-task::-moz-placeholder {  /* Firefox 19+ */
+   color: #cccccc;
+   font-style: italic;
+}
+
+.content .new-task:-ms-input-placeholder {
+   color: #cccccc;
+   font-style: italic;
+}
+
+.content .date {
+    width: 200px;
+    box-shadow: 0px 0px 0px #888888;
+    padding: 10px 15px 10px 15px;
+}
+
+.content .date::-webkit-input-placeholder {
+   color: #cccccc;
+   font-style: italic;
+}
+
+.content .date:-moz-placeholder { /* Firefox 18- */
+   color: #cccccc;
+   font-style: italic;
+}
+
+.content .date::-moz-placeholder {  /* Firefox 19+ */
+   color: #cccccc;
+   font-style: italic;
+}
+
+.content .date:-ms-input-placeholder {
+   color: #cccccc;
+   font-style: italic;
+}
+
+.add-button {
+    font-size: 1em;
+    width: 150px;
+    padding: 5px 5px 5px 5px;
+    background: lightgray;
+    border: 2px outset lightgray;
+    cursor: hand;
+}
+
+.task {
+    font-size: 1.5em;
+    background-color: #ffffff;
+    text-align: left;
+    width: 480px;
+    display: inline-block;
+    padding: 10px 30px 10px 30px;
+}
+
+.task-list {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+    padding: 10px 30px 10px 30px;
+    width: 700px;
+    text-align: center;
+    font-size: 1.5em;
+    background-color: #ffffff;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.task-list thead {
+    background-color: #cc6666;
+}
+
+.task-list td {
+    height: 50px;
+}
+
+.done-cell {
+    width: 10%;
+}
+
+.task-text-cell {
+}
+
+.date-cell {
+    width: 40%;
+}
+
+.date-cell:hover {
+    cursor: hand;
+}
+
+.task-list tr.done {
+    background-color: #999999;
+    color: #666666;
+}
