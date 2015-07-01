@@ -14,22 +14,21 @@ function TodoView() {
     if (!(this instanceof TodoView)) {
         return new TodoView();
     }
+    this.newTaskTextInput = document.querySelector(".new-task");
+    this.newTaskDateInput = document.querySelector(".date");
+    this.addTaskButton = document.querySelector(".add-button");
+    this.taskListTable = document.querySelector(".task-list");
+    this.dateCell = document.querySelector(".date-cell");
 
+    //localStorage.clear("todo");
     this.init();
 }
 
 //initialize all required DOM elements and add eventListeners to them
 TodoView.prototype.init = function() {
     var self = this,
-        downloadTasks,
-        downloadCompletedEvent = new Event("downloadCompleted"),
+        tasksReadyEvent = new Event("tasksReady"),
         localTasks;
-
-    this.newTaskTextInput = document.querySelector(".new-task");
-    this.newTaskDateInput = document.querySelector(".date");
-    this.addTaskButton = document.querySelector(".add-button");
-    this.taskListTable = document.querySelector(".task-list");
-    this.dateCell = document.querySelector(".date-cell");
 
     //add button. Handler for adding new User's task
     this.addTaskButton.addEventListener("click", function(e) {
@@ -47,12 +46,10 @@ TodoView.prototype.init = function() {
     });
 
     //custom event for downloading task from server
-    this.taskListTable.addEventListener("downloadCompleted", function(e) {
-        var i;
-
-        for (i = 0; i < self.tasks.length; i++) {
-            self.addTask(self.tasks[i].task, self.tasks[i].expires_at, self.tasks[i].done);
-        }
+    this.taskListTable.addEventListener("tasksReady", function(e) {
+        self.tasks.forEach(function(cur) {
+            self.addTask(cur.task, cur.expires_at, cur.done);
+        });
     });
 
     //event handler for table sorting by date
@@ -79,7 +76,7 @@ TodoView.prototype.init = function() {
         var xhr = createCORSRequest("GET", "http://rygorh.dev.monterosa.co.uk/todo/items.php");
 
         if (xhr === null) {
-            self.tasks = []
+            self.tasks = [];
             return;
         }
 
@@ -89,19 +86,19 @@ TodoView.prototype.init = function() {
                 cur.expires_at += "000";
                 return cur;
             });
-            self.taskListTable.dispatchEvent(downloadCompletedEvent);
+            self.taskListTable.dispatchEvent(tasksReadyEvent);
         };
         xhr.send();
     } else {
         self.tasks = JSON.parse(localTasks);
-        self.taskListTable.dispatchEvent(downloadCompletedEvent);
+        self.taskListTable.dispatchEvent(tasksReadyEvent);
     }
 
     //store tasks in localStorage when refresh or close page
     window.addEventListener("beforeunload", function(e) {
         localStorage.setItem("todo", JSON.stringify(self.tasks));
     });
-}
+};
 
 //create new DOM elements for new table row and add event handler for checkbox
 TodoView.prototype.addTask = function(taskText, taskDate, isDone) {
@@ -113,25 +110,7 @@ TodoView.prototype.addTask = function(taskText, taskDate, isDone) {
         dateCell = document.createElement("td"),
         taskListTable = document.querySelector(".task-list tbody"),
         formatDateToString,
-        formatDateNumber,
         handleCheckBox;
-
-    formatDateNumber = function(number) {
-        return number < 10 ? "0" + number : number;
-    };
-
-    formatDateToString = function(dateNumber) {
-        var expirationDate = new Date(parseInt(dateNumber)),
-            month = formatDateNumber(expirationDate.getUTCMonth() + 1),
-            day = formatDateNumber(expirationDate.getUTCDate()),
-            year = formatDateNumber(expirationDate.getUTCFullYear()),
-            hours = formatDateNumber(expirationDate.getHours()),
-            minutes = formatDateNumber(expirationDate.getMinutes()),
-            seconds = formatDateNumber(expirationDate.getSeconds()),
-            checkBoxCheckedEvent;
-
-        return month + "/" + day + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
-    };
 
     //event handler for checkbox
     handleCheckBox = function(e) {
@@ -158,7 +137,7 @@ TodoView.prototype.addTask = function(taskText, taskDate, isDone) {
 
     textCell.innerHTML = taskText;
 
-    dateCell.innerHTML = formatDateToString(taskDate);
+    dateCell.innerHTML = DATE_UTIL_MODULE.formatDateToString(taskDate);
 
     row.appendChild(doneCell);
     row.appendChild(textCell);
